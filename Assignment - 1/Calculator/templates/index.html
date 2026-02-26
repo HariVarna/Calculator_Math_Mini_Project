@@ -1,40 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Numerical Methods Toolkit</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-
-<nav>
-    <h2>Numerical Methods Toolkit</h2>
-</nav>
-
+{% extends "base.html" %}
+{% block content %}
 <section class="hero">
-    <h1>Professional Numerical Analysis Interface</h1>
-    <p>Interactive step-by-step computational tools</p>
+    <h1>Interactive Numerical Methods Lab</h1>
+    <p>Use guided forms, safer expression parsing, and step-by-step output tables.</p>
 </section>
 
-<div class="card-container">
+<section class="card-grid">
     <a href="/gauss" class="card">
-        <h3>Gauss Seidel</h3>
-        <p>Iterative Linear System Solver</p>
+        <h3>Gauss-Seidel</h3>
+        <p>Solve 3x3 linear systems iteratively with convergence tracking.</p>
     </a>
 
     <a href="/trapezoidal" class="card">
         <h3>Trapezoidal Rule</h3>
-        <p>Numerical Integration Method</p>
+        <p>Approximate definite integrals from a function or tabulated points.</p>
     </a>
 
     <a href="/milne" class="card">
         <h3>Milne Method</h3>
-        <p>Predictor-Corrector ODE Solver</p>
+        <p>Predictor-corrector approach for first-order ODEs.</p>
     </a>
-</div>
-
-<footer>
-    © 2026 Numerical Methods Project
-</footer>
-
-</body>
-</html>
+</section>
+{% endblock %}

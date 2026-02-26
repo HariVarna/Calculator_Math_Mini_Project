@@ -1,41 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Milne Predictor-Corrector</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<h2>Milne Predictor-Corrector Method</h2>
+<p class="help">Solve \(\frac{dy}{dx}=f(x,y)\). Use expression variables <code>x</code> and <code>y</code>.</p>
 
-<nav><h2>Milne Predictor-Corrector Method</h2></nav>
+<form method="POST" class="panel-form" data-example="milne">
+    <div class="equation-input">
+        <label for="fn">f(x,y) =</label>
+        <input id="fn" name="function" placeholder="x + y" required>
+    </div>
 
-<div class="form-container">
-<form method="POST">
-<input name="function" placeholder="dy/dx e.g. x+y" required>
-<input name="x0" placeholder="Initial x" required>
-<input name="y0" placeholder="Initial y" required>
-<input name="h" placeholder="Step size" required>
-<input name="steps" placeholder="Steps" required>
-<button type="submit">Compute</button>
-<button type="reset">Clear</button>
+    <div class="equation-row">
+        <label for="x0">x0</label>
+        <input id="x0" type="number" step="any" name="x0" required>
+
+        <label for="y0">y0</label>
+        <input id="y0" type="number" step="any" name="y0" required>
+    </div>
+
+    <div class="equation-row">
+        <label for="h">Step h</label>
+        <input id="h" type="number" step="any" name="h" required>
+
+        <label for="steps">Total points</label>
+        <input id="steps" type="number" min="4" step="1" name="steps" required>
+    </div>
+
+    <div class="actions">
+        <button type="button" class="secondary" data-fill-example="milne">Load Example</button>
+        <button type="submit">Compute</button>
+    </div>
 </form>
+
+{% if result %}
+<div class="result-box">
+    <p>Final approximation: x = {{ "%.8f"|format(result[0]) }}, y = {{ "%.8f"|format(result[1]) }}</p>
 </div>
 
-{% if steps %}
-<h3>Stepwise Values</h3>
 <table>
-<tr><th>x</th><th>y</th></tr>
-{% for row in steps %}
-<tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-{% endfor %}
+    <tr><th>x</th><th>y</th></tr>
+    {% for row in steps %}
+    <tr><td>{{ "%.8f"|format(row[0]) }}</td><td>{{ "%.8f"|format(row[1]) }}</td></tr>
+    {% endfor %}
 </table>
-
-<h3>Final Approximation: {{ result }}</h3>
 {% endif %}
 
 {% if error %}
-<div class="error-box">{{ error }}</div>
+<div class="error">{{ error }}</div>
 {% endif %}
-
-<footer><a href="/">← Back</a></footer>
-</body>
-</html>
+{% endblock %}

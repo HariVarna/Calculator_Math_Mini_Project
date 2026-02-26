@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerical Methods Toolkit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<header>
+    <div class="logo">Numerical<span>Toolkit</span></div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/gauss">Gauss-Seidel</a>
+        <a href="/trapezoidal">Trapezoidal</a>
+        <a href="/milne">Milne</a>
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    &copy; 2026 Numerical Methods Project
+</footer>
+</body>
+</html>

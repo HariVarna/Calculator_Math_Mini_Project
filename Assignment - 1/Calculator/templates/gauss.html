@@ -1,65 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Gauss Seidel Method</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<h2>Gauss-Seidel Method</h2>
+<p class="help">Solve \(AX = B\). Enter all coefficients for the 3x3 matrix and constants vector.</p>
 
-<nav><h2>Gauss Seidel Iterative Method</h2></nav>
+<form method="POST" class="panel-form" data-example="gauss">
+    <div class="matrix-wrapper">
+        <div class="matrix-block">
+            <h4>Matrix A</h4>
+            <div class="matrix">
+                <input type="number" step="any" name="a11" placeholder="a11" required>
+                <input type="number" step="any" name="a12" placeholder="a12" required>
+                <input type="number" step="any" name="a13" placeholder="a13" required>
+                <input type="number" step="any" name="a21" placeholder="a21" required>
+                <input type="number" step="any" name="a22" placeholder="a22" required>
+                <input type="number" step="any" name="a23" placeholder="a23" required>
+                <input type="number" step="any" name="a31" placeholder="a31" required>
+                <input type="number" step="any" name="a32" placeholder="a32" required>
+                <input type="number" step="any" name="a33" placeholder="a33" required>
+            </div>
+        </div>
 
-<div class="info-box">
-<p>Solves system of linear equations iteratively.</p>
-<p>$$ x_i = \frac{1}{a_{ii}} \left(b_i - \sum a_{ij} x_j \right) $$</p>
-</div>
+        <div class="vector">=</div>
 
-<div class="form-container">
-<form method="POST">
-<div class="grid">
-<input name="a11" placeholder="a11" required>
-<input name="a12" placeholder="a12" required>
-<input name="a13" placeholder="a13" required>
-<input name="a21" placeholder="a21" required>
-<input name="a22" placeholder="a22" required>
-<input name="a23" placeholder="a23" required>
-<input name="a31" placeholder="a31" required>
-<input name="a32" placeholder="a32" required>
-<input name="a33" placeholder="a33" required>
-</div>
+        <div class="matrix-block">
+            <h4>Vector B</h4>
+            <div class="matrix single-column">
+                <input type="number" step="any" name="b1" placeholder="b1" required>
+                <input type="number" step="any" name="b2" placeholder="b2" required>
+                <input type="number" step="any" name="b3" placeholder="b3" required>
+            </div>
+        </div>
+    </div>
 
-<div class="grid">
-<input name="b1" placeholder="b1" required>
-<input name="b2" placeholder="b2" required>
-<input name="b3" placeholder="b3" required>
-</div>
-
-<button type="submit">Compute</button>
-<button type="reset">Clear</button>
+    <div class="actions">
+        <button type="button" class="secondary" data-fill-example="gauss">Load Example</button>
+        <button type="submit">Compute</button>
+    </div>
 </form>
+
+{% if result %}
+<div class="result-box">
+    <h3>Status: {{ status }}</h3>
+    <p>Final solution: [{{ "%.6f"|format(result[0]) }}, {{ "%.6f"|format(result[1]) }}, {{ "%.6f"|format(result[2]) }}]</p>
 </div>
+
+<table>
+    <tr><th>Iteration</th><th>x values</th><th>Max error</th></tr>
+    {% for step in steps %}
+    <tr>
+        <td>{{ step[0] }}</td>
+        <td>[{{ "%.6f"|format(step[1][0]) }}, {{ "%.6f"|format(step[1][1]) }}, {{ "%.6f"|format(step[1][2]) }}]</td>
+        <td>{{ "%.8f"|format(step[2]) }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
 
 {% if error %}
-<div class="error-box">{{ error }}</div>
+<div class="error">{{ error }}</div>
 {% endif %}
-
-{% if steps %}
-<h3>Iteration Table</h3>
-<table>
-<tr><th>Iteration</th><th>Values</th><th>Error</th></tr>
-{% for step in steps %}
-<tr>
-<td>{{ step[0] }}</td>
-<td>{{ step[1] }}</td>
-<td>{{ "%.6f"|format(step[2]) }}</td>
-</tr>
-{% endfor %}
-</table>
-
-<h3>Status: {{ status }}</h3>
-<h3>Final Solution: {{ result }}</h3>
-{% endif %}
-
-<footer><a href="/">← Back</a></footer>
-</body>
-</html>
+{% endblock %}

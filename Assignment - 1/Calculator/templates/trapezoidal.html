@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Trapezoidal Rule</h2>
+<p class="help">Compute \(\int_a^b f(x)dx\) using either function mode or table mode.</p>
+
+<form method="POST" class="panel-form" data-example="trapezoidal">
+    <h3>Function Mode</h3>
+    <p class="help">Use variables/functions like: <code>x</code>, <code>sin(x)</code>, <code>log(x)</code>, <code>exp(x)</code>.</p>
+    <input name="function" placeholder="f(x), e.g. x**2 + sin(x)">
+
+    <div class="equation-row">
+        <input type="number" step="any" name="a" placeholder="Lower limit a">
+        <input type="number" step="any" name="b" placeholder="Upper limit b">
+        <input type="number" min="1" step="1" name="n" placeholder="Intervals n">
+    </div>
+
+    <hr>
+
+    <h3>Table Mode (Optional)</h3>
+    <p class="help">Leave function mode empty and fill matched x, f(x) pairs (equally spaced x).</p>
+    <div class="matrix table-grid">
+        <input type="number" step="any" name="x0" placeholder="x0">
+        <input type="number" step="any" name="x1" placeholder="x1">
+        <input type="number" step="any" name="x2" placeholder="x2">
+        <input type="number" step="any" name="x3" placeholder="x3">
+        <input type="number" step="any" name="x4" placeholder="x4">
+    </div>
+
+    <div class="matrix table-grid">
+        <input type="number" step="any" name="f0" placeholder="f(x0)">
+        <input type="number" step="any" name="f1" placeholder="f(x1)">
+        <input type="number" step="any" name="f2" placeholder="f(x2)">
+        <input type="number" step="any" name="f3" placeholder="f(x3)">
+        <input type="number" step="any" name="f4" placeholder="f(x4)">
+    </div>
+
+    <div class="actions">
+        <button type="button" class="secondary" data-fill-example="trapezoidal">Load Example</button>
+        <button type="submit">Compute</button>
+    </div>
+</form>
+
+{% if result is not none %}
+<div class="result-box">
+    <p>Approximate integral: <strong>{{ "%.8f"|format(result) }}</strong></p>
+    {% if h is not none %}
+    <p>Step size h: {{ "%.8f"|format(h) }}</p>
+    {% endif %}
+    {% if mode %}
+    <p>Mode used: {{ mode|capitalize }}</p>
+    {% endif %}
+</div>
+
+{% if table %}
+<table>
+    <tr><th>x</th><th>f(x)</th></tr>
+    {% for row in table %}
+    <tr><td>{{ "%.8f"|format(row[0]) }}</td><td>{{ "%.8f"|format(row[1]) }}</td></tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endif %}
+
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+{% endblock %}
