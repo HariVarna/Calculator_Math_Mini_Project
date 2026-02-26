@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Milne Predictor-Corrector</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav><h2>Milne Predictor-Corrector Method</h2></nav>
+
+<div class="form-container">
+<form method="POST">
+<input name="function" placeholder="dy/dx e.g. x+y" required>
+<input name="x0" placeholder="Initial x" required>
+<input name="y0" placeholder="Initial y" required>
+<input name="h" placeholder="Step size" required>
+<input name="steps" placeholder="Steps" required>
+<button type="submit">Compute</button>
+<button type="reset">Clear</button>
+</form>
+</div>
+
+{% if steps %}
+<h3>Stepwise Values</h3>
+<table>
+<tr><th>x</th><th>y</th></tr>
+{% for row in steps %}
+<tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+{% endfor %}
+</table>
+
+<h3>Final Approximation: {{ result }}</h3>
+{% endif %}
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+<footer><a href="/">← Back</a></footer>
+</body>
+</html>

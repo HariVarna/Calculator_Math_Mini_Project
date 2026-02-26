@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gauss Seidel Method</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav><h2>Gauss Seidel Iterative Method</h2></nav>
+
+<div class="info-box">
+<p>Solves system of linear equations iteratively.</p>
+<p>$$ x_i = \frac{1}{a_{ii}} \left(b_i - \sum a_{ij} x_j \right) $$</p>
+</div>
+
+<div class="form-container">
+<form method="POST">
+<div class="grid">
+<input name="a11" placeholder="a11" required>
+<input name="a12" placeholder="a12" required>
+<input name="a13" placeholder="a13" required>
+<input name="a21" placeholder="a21" required>
+<input name="a22" placeholder="a22" required>
+<input name="a23" placeholder="a23" required>
+<input name="a31" placeholder="a31" required>
+<input name="a32" placeholder="a32" required>
+<input name="a33" placeholder="a33" required>
+</div>
+
+<div class="grid">
+<input name="b1" placeholder="b1" required>
+<input name="b2" placeholder="b2" required>
+<input name="b3" placeholder="b3" required>
+</div>
+
+<button type="submit">Compute</button>
+<button type="reset">Clear</button>
+</form>
+</div>
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+{% if steps %}
+<h3>Iteration Table</h3>
+<table>
+<tr><th>Iteration</th><th>Values</th><th>Error</th></tr>
+{% for step in steps %}
+<tr>
+<td>{{ step[0] }}</td>
+<td>{{ step[1] }}</td>
+<td>{{ "%.6f"|format(step[2]) }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Status: {{ status }}</h3>
+<h3>Final Solution: {{ result }}</h3>
+{% endif %}
+
+<footer><a href="/">← Back</a></footer>
+</body>
+</html>

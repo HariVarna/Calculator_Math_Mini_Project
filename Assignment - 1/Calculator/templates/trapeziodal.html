@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trapezoidal Rule</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav><h2>Trapezoidal Rule</h2></nav>
+
+<div class="info-box">
+<p>Approximates definite integrals.</p>
+<p>$$ \int_a^b f(x)dx \approx \frac{h}{2}[f(x_0)+2f(x_1)+...+f(x_n)] $$</p>
+</div>
+
+<div class="form-container">
+<form method="POST">
+<input name="function" placeholder="Function e.g. x**2" required>
+<input name="a" placeholder="Lower limit" required>
+<input name="b" placeholder="Upper limit" required>
+<input name="n" placeholder="Intervals" required>
+<button type="submit">Compute</button>
+<button type="reset">Clear</button>
+</form>
+</div>
+
+{% if table %}
+<h3>Step Size: {{ h }}</h3>
+<table>
+<tr><th>x</th><th>f(x)</th></tr>
+{% for row in table %}
+<tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+{% endfor %}
+</table>
+
+<h3>Integral Approximation: {{ result }}</h3>
+{% endif %}
+
+{% if error %}
+<div class="error-box">{{ error }}</div>
+{% endif %}
+
+<footer><a href="/">← Back</a></footer>
+</body>
+</html>
